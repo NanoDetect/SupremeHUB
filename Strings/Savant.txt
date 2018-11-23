@@ -1,0 +1,162 @@
+
+
+::////////////////////////////
+@echo off
+set {BUILD}=2.6.1.0
+title Savant Screenshare Tool
+set {red}=[91m
+set {green}=[92m
+set {reset}=[0m
+set {bold}=[1m
+set {underline}=[4m
+set {inverse}=[7m
+goto {MAIN-MENU}
+::////////////////////////////
+
+
+::////////////////////////////
+:{SCAN-GUI}
+cls & mode con: cols=45 lines=7
+echo.
+echo       %{underline}%_________________________________%{reset}%
+echo       %{inverse}% %{reset}%                               %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%%{title}%
+echo       %{inverse}% %{reset}%%{underline}%_______________________________%{reset}%%{inverse}% %{reset}%
+echo.
+goto :EOF
+::////////////////////////////
+
+
+::////////////////////////////
+:{MENU-GUI}
+cls & mode con: cols=45 lines=16
+echo.
+echo       %{underline}%_________________________________%{reset}%
+echo       %{inverse}% %{reset}%                               %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%    %{bold}%%{underline}%Savant Screenshare Tool%{reset}%    %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%                               %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%    %{bold}%Build: %{reset}%%{BUILD}%        %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%  %{bold}%Discord: %{reset}%discord.io/savant   %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%%{underline}%_______________________________%{reset}%%{inverse}% %{reset}%
+echo.
+echo.
+goto :EOF
+::////////////////////////////
+
+
+::////////////////////////////
+:{FILE-SELECTOR-GUI}
+cls & mode con: cols=45 lines=14
+echo.
+echo       %{underline}%_________________________________%{reset}%
+echo       %{inverse}% %{reset}%                               %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%         %{bold}%%{underline}%File Selector%{reset}%         %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%                               %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%    %{reset}%Type 'back' to go back.    %{inverse}% %{reset}%
+echo       %{inverse}% %{reset}%%{underline}%_______________________________%{reset}%%{inverse}% %{reset}%
+echo.
+echo.
+goto :EOF
+::////////////////////////////
+
+
+::////////////////////////////
+:{MAIN-MENU}
+call :{MENU-GUI}
+echo       [%{bold}% 1 %{reset}%]  Grab Strings
+echo.
+echo       [%{bold}% 2 %{reset}%]  Scan Strings
+echo %{bold}%
+set /p {FILE}=%{bold}%Select:%{reset}% 
+set {FILE}=%{FILE}:"=%
+if /I "%{FILE}%"=="1" goto {PH2}
+if /I "%{FILE}%"=="2" goto {FILE-SELECTOR}
+goto {MAIN-MENU}
+::////////////////////////////
+
+
+::////////////////////////////
+:{FILE-SELECTOR}
+call :{FILE-SELECTOR-GUI}
+set /p {FILE}=%{bold}%Drag the .txt file here:%{reset}% 
+set {FILE}=%{FILE}:"=%
+if /I "%{FILE}%"=="back" goto {MAIN-MENU}
+
+if not exist "%{FILE}%" (
+call :{FILE-SELECTOR-GUI}
+echo           %{red}%That file does not exist.
+echo               Please try again.%{reset}%
+timeout /t 3 /nobreak >nul 2>&1
+goto {FILE-SELECTOR}
+)
+
+for %%R in ("%{FILE}%") do if %%~zR LSS 1 (
+call :{FILE-SELECTOR-GUI}
+echo             %{red}%That file has no data.
+echo               Please try again.%{reset}%
+timeout /t 3 /nobreak >nul 2>&1
+goto {FILE-SELECTOR}
+)
+
+if /i "%{FILE}:~-4%" neq ".txt" (
+call :{FILE-SELECTOR-GUI}
+echo         %{red}%That file is not a .txt file.
+echo               Please try again.%{reset}%
+timeout /t 3 /nobreak >nul 2>&1
+goto {FILE-SELECTOR}
+)
+::////////////////////////////
+
+
+::////////////////////////////
+:{JAVAW}
+cd "%b2eincfilepath%\grep\bin"
+set {title}=           %{bold}%Scanning...%{reset}%         %{inverse}% %{reset}%
+call :{SCAN-GUI}
+
+
+grep --quiet --max-count=1 -e "io/fishermen/fpsdisplay/hehe" -e "IfsdffsdfdsfdsIIidfsdfsdfsdfsdfsillliidsfdsfdsfdsfiIIsdfsdfsdfsdf" -e "paralyzed.module.modules" -e "sallos/Sallos" -e "Pandora\Modules\Combat" -e "me/zero/clarinet/Impact.class" -e "skillclient-logo.png" -e "qr8b$q153.class" -e "skill\eZ.class" -e "de\jan\ClientMain.class" -e "net\Krypton\UI\Fonts\Fonts.class" -e "jens/commands/impl" -e "de/labystudio/labymod/client/modules/impl" -e "heracles/client" -e "rogers/alaska" -e "kys/bleach/Bleach" -e "me/raizex/ancient/module" -e "me/arabpvp/Reborn" -e "me/lemon/arcane/Arcane" -e "me/Austin/client/modules" -e "rip/jutting/polaris/Polaris" -e "net/wurstclient/features/Mod" -e "me.salamander.client" -e "io.conceal" -e "com.krispdev" -e "me.nuf.conceit" -e "org.reflexteam" -e "club.notben.safewalk" -e "xyz.phase.meme" -e "parvo.module.mods" -e "me.iquintennn.paralyzed" -e "org.elitetaco.taco" -e "/OCMCClient/sC.class" -e "de.labymod.client.modules.impl" -e "LabyMod_dfjhjdgkjfdhdgkdskgjksdgjkhgsfhjhfdh.class" -e "liquidbounce" -e "Minnesotuh" -e "Solstice2Op" -e "omikronclient" -e "Luna_." -e "TimoliaLagBack" -e "/LabySkiiidBind.txt" -e "cZEERO" -e "cPhoenix" -e "UFuckedUpSkid" -e "versions/EaZy" -e "JigsawClientMEME_" -e "WinterClient" "%{FILE}%"
+if %errorlevel% EQU 0 (
+set {title}=          %{red}%Cheats found.%{reset}%        %{inverse}% %{reset}%
+call :{SCAN-GUI}
+timeout /t 9 /nobreak >nul 2>&1 & goto {MAIN-MENU}
+)
+
+
+grep --quiet --max-count=1 -e "ReachMod.class" -e "pw/cinque/cpsmod/SpoofType.class" -e "mousetweaks/Mousebutton.c" -e "mousetweaks/liteloader/LiteModMouseTweaks" -e "net/reach/Verzide" -e "CancerTweaker.class" -e "KBMOD.class" -e "ping:textures/ping.png" -e "SSROCK_Velocity" -e "net.reach.SbProxyv2" -e "nokbconfig1" -e "set.proxy.thk" -e "io\fishermen\fpsdisplay\settings\Wool.class" -e "io\fishermen\fpsdisplay\settings\zub.class" -e "children/mod" -e "FREE/Grand0x" -e "pw/cinque/wombut" -e "acs/tabbychat/injection" -e "rebellion/tcpnod" -e "bspkrs/directionhud/fml/trsvj" -e "me/dewgs/particlemod/x/FakeMeFraClass123456" -e "pww/cinque" -e "idr/peu" -e "com/reboting/conexion" -e "net/kohi/tcpnodelaymod/Proxy" -e "net/black/outz/Detection" -e "me/massi/reach/Reach" -e "dos/rapidity/knock" -e "Lwvb/Ping" -e "Lconfig/Unique" -e "velocity/ServerProxy" -e "/a.class:::0" -e "Lnet/minecraft/scooby/mod" -e "Lnet/ping/Rafa" -e "Lpw/cinque/keystrokes/mmm" -e "bspkrs/bspkrscore/fml/Px" -e "pw/cinque/motionblur/TC" -e "pw/cinque/motionblur/commands/CDay" -e "batty/ui/server" -e "KB/op13/ping" -e "bspkrs/bspkrscore/fml/ProxyPool" -e "net.Cancer.ProxyClient" -e "net.minecraft.scooby" -e "deez.togglesneak.APITicker" -e "me.tsglu.ke" -e "me.tsgluke" -e "dmillerw.ping.proxy.ClientProxy" -e "NBTMulticlass.class" -e "Reg1.class" -e "EventMod.class" -e "ArtLatencyTw.class" -e "KnockSpeed.class" -e "Ping1.class" -e "Ping2.class" -e "RenderRainbow.class" -e "IngameAccountSwitcher$1.class" -e "ParticleMod$1.class" -e "cancncancer.MPFXcQugJp9ADxq" -e "UncommonProxy.class" -e "Unique0.class" -e "BlockVisitor.class" -e "src/a.class" -e "b_.class" -e "directionhud/textures/gui/icon.class" -e "trsvj.class" -e "/a.class:::1" -e "/a.class:::0" -e "particlemod/ParticleMod$1.class" -e "me/javlin/sharpnessparticles/SharpnessParticles$1.class" -e "!/fastcraft/E.class" -e "DOSHeavy" -e "wvbcancer" -e "SharKyE" -e "PRINNCE" -e "LATENCYREACH" -e "SomeraMOD" -e "tcpLatency.5" -e "Travisvv" -e "FuncraftDelay" -e "SwitchConnectionMod" -e "io/netty/bestclient" -e "me/yario/fakegui" -e "dr/joseph/classtweaker.class" -e "TcpNoDelayMod-1.0.jar!/a" -e "fr/zilax/mod" "%{FILE}%"
+if %errorlevel% EQU 0 (
+set {title}=          %{red}%Cheats found.%{reset}%        %{inverse}% %{reset}%
+call :{SCAN-GUI}
+timeout /t 9 /nobreak >nul 2>&1 & goto {MAIN-MENU}
+)
+
+
+grep --quiet --max-count=1 -e "j?kF\[6" -e "QtHRqW" -e "WS\[mP1W" -e "http://cane8993jdsjad98sad9ssa9.altervista.org" -e "me/tru3/base/modules/ModuleManager" -e "lee0xp28dd2c7955ce926456240b2ff0100bde9b51b4e0f250230de20e3e15cece6efa" -e "memememememem" -e "10/10/2/10/" -e "AVIX/natives" -e "gorilla/Gorilla" -e "gorilla.main" -e "phantom/values" -e "sl/steeldood/bit/client/Bit" -e "me.tojatta.clicker" -e "kyprak.mods" -e "maven.harambe" -e "41.41.41.9.41.41.41.41" -e "Fichi.lol" -e "net.spookysquad.spookster" -e "Horizon58.HorizonCode" -e "me.veylkar.pepe" -e "us.cuck.core" -e "me.stoud.merge" -e "xyz.gucciclient" -e "net.azurewebsites.thehen101.gc" -e "deez.togglesneak.era" -e "net/kohi/tcpnodelaymod/A" -e "net/kohi/tcpnodelaymod/con" -e "pw/cinque/keystrokes/pp/Willy" -e "me.aristhena" -e "net/erouax/instavape" -e "me/rowin/" -e "fitchi/" -e "\cleaner.jar" -e "KyPrak.class" -e "Gucci.class" -e "PhantomButtonUI.class" -e "CyanideComboBoxUI.class" -e "Gorilla.class" -e "NigLoad.class" -e "fml:gc" -e "ZylowhClient" -e "Drainings" -e "UnlegitClient" -e "?:willy" -e "com/sun/jna/z/Main" -e "partyman" -e "2.47-KILL" -e "n\[Lf/m;" -e "onetap.cc" -e "E+3H" -e "BYYYJYYYJYYYJ))" -e "IllIlIlIlIIlIlllIIIIlIIlIlIlIl" -e "IllllllIIIlllIlIIIIIlIlIIIlllI" -e "lIlllIlIIIlIIIIIlIIIIlIIIllIIl" -e "IIIIIlIIlllIIlIIllIIIIIIlIlIlI" -e "IlIlllIllllIIllllllIlIIIIIIllI" -e "SpookyNan" -e "LiteDLL.dll" -e "\[2]java.security.SecureClassLoader" -e "(\[Lf/c;)V" -e "yCcADi" -e "74.91.125.194" -e ">KRTal" -e "mergeclientd" -e "(FFZLhi/aY;)V" -e "harambe.png" -e "trumpclientftw_bape_gg" -e "W_W_Y6" -e "czaarek99" -e "v-2.49" -e "fml:asparagus" -e "ZKM9.0.2" -e "01)1111" -e "5KPoq" -e "&.EGO\^`ijnoz" -e "(@C+" -e "85PF?" -e "_W_Y=6" -e "Cyanit/ab.class" -e "getGucci" -e "A0toCricking.class" -e "(\[BI\[B\[BIIZ)\[B" -e "(\[CFFIZI)I" "%{FILE}%"
+if %errorlevel% EQU 0 (
+set {title}=          %{red}%Cheats found.%{reset}%        %{inverse}% %{reset}%
+call :{SCAN-GUI}
+timeout /t 9 /nobreak >nul 2>&1 & goto {MAIN-MENU}
+)
+
+
+grep --quiet --max-count=1 -e "n@~O%" -e "<>AVU%A" -e "kiedHdNT>Z<RI" -e "_/this.classPK" -e "Yay_Logo.png" -e "Small_Cheat" -e "?export=download" -e "net/minecraft/scooby/util/ModeUtils.class" -e "me/tmih/yt/AC.class" -e "main/TeraModifier.class" -e "AtomClient4Beta" -e "Lyvell/altmanager.png" -e "sampler/a/a.class" -e "com/S9_/" -e "irid/a$a.class" -e "u02c8" -e "tsissAmiA" -e "aperture/module" -e "(Lhi/aK;ILhi/Q;)V" -e "Aperture.class" -e "i/xx$Op.classUT" -e "^0_=`HbTc\edf" -e "SamerDEV%" -e "<tTgi" -e "fRAQII" -e "jdGyW`!z@" -e "n%\u0007La" -e "i%'Jb" -e "LILILILILILILILILILIILLILLIILILILLILILILIL" -e "key.forcefield" -e "net.minecraft.hacks" -e "hacks.commands" -e "net.minecraft._a" -e "downloadURL" -e "aSBsaWtlIGNvY2tz" -e "xenitzu" -e "g3tM0dul3" -e "g3tV4l4u3" -e "1nwjiakh0w5l5" -e "oKyJbP~JlJh" -e "36c78a58-d2ec-482e-9373-cf43bae7c13f" -e "k2KAS" -e "TCNH$1" -e "yclientunlockremotecontrol" -e "XvqAVEWZrlFUfuRAXbAq" -e "hOFFsXYAzmLtYvPXcjPB" -e "knockback.setvalue" -e "0SO1Lk2KASxzsd" -e "Py3ss" -e "e6h'c!" -e "UW_F" -e "(\[SSl)Z" -e "(Sll)S" -e "mixins.mcwrapper.json" -e "D,3p7m/0~(" -e "J!6v3x" -e "UBFPltycpcnooWVSjknWsol" -e "FLAXaSwPIYrPeHLflvDLAT" -e "4HDX4+" -e "Anymos" -e "~MCnetHandler" -e "hypot149" -e "#=5<.&2" -e "OHYIBS^ILIH" -e "ALLATORIxDEMO" -e "leonhard08kl1156126403715" -e "W#nC" -e "$>'j_" -e "Nekit111" -e "FakeDestructelsfClass123456" -e ":C@J" -e "e$LIsr" -e "<]=K" -e "Sjske48##" -e "158.69.213.238" -e "lsdclicker.xml" -e "526;7K8T" -e "Lanh;nte" -e "Lbny;rit" -e "q]KA" -e "ProMcHacks" -e "(Lcfe;Lcad;Lbjk;)V" -e "k$n.o1p2q6s" -e "shell.rundll32" -e "instrument.dll" -e "MENTALFROSTBYTE_" -e "IllIIIIlllllIlIllllllIIllIIlllllIIllllIIlIlIIIlIllIIlIlllllI" -e "eu_awitfc_" -e "quelquechose.ExternalGhostlyUI" -e "bmWxU." -e "Y6j&,z" -e "L0t1,b" -e "d3Jwmq_n9\EgzGV0GixzPl" -e "Jessica\binds.txt" -e "/sys_rec32.txt" -e "ByCGLIB" -e "?modtoggle-" -e "SirJava" -e "skid-machine" -e "Finishao10" -e "val$var12" -e "rnv!Y" -e "TE123123123ST" -e "&AD4(X" -e "Q))IaQQaqaaqaQQaqaaqqaQa3j" -e "friends_xd" -e "lIIIlIIllIIlllIIIIIllIlll" -e "avatarsmokeweedeveryday420" -e "avatarhasautisminthehead" -e "luqx?$~cg:le" -e "wmic.exe" -e "kBVCIRLXPS" -e "ZnVuY18xNDg4MjFfYQ" -e "bmV4dEVsZW1lbnQ" -e "iReSqtkUV" -e "kc(g9" -e "dg82fo.pw" -e "fEwTtP" -e "6VoMs" -e "YYX`" -e "5@F#" -e "d\[<N6" -e "https://www.dropbox.com/s/k7bn2s6os2p1kly/%5B1.7.10%5DbspkrsCore-universal-6.16.jar" -e "-KillSwitch" -e "NkNKmvea" -e "BlameEgghop" -e "Baracon" -e "EeIl9yE0xhPbLmF" -e "SKIDPROTECTION" -e "JarRsrcLoader$" -e "&export=download" -e "DontBlameProguardCuzItsGud" -e "Andrew_Saint_560812" -e "0n*z#@" -e "WjM!TfWjZ" -e "(j4nz1ol" -e "z)j:0#q-12" -e "1p04i1zx9z623" -e "fop57vxtnmpj" -e "1rh9jw855snsi" -e "1jebhsqhp1qx" -e "4tlog" -e "privcli3nt" -e "bBDAFBD8CA7383D0B" -e "Lorg/apache/commons/codec/net/URLCodec;" -e "(DDDDLjava/awt/Color;)V" -e "(DDDDDDDLjava/awt/Color;)V" -e "8RVPqt8" -e "nYEYj$" -e "sadohyk-" -e "a9d//sad" -e "2135;sd" -e "FSAG+++" -e "Xtc$1" -e "ProggyClean.ttf" -e "$elf" -e "AVClientTrig" -e "WVZ]W" -e "^POCJE" "%{FILE}%"
+if %errorlevel% EQU 0 (
+set {title}=          %{red}%Cheats found.%{reset}%        %{inverse}% %{reset}%
+call :{SCAN-GUI}
+timeout /t 9 /nobreak >nul 2>&1 & goto {MAIN-MENU}
+)
+
+
+grep --quiet --max-count=1 -e "uer/tdv/vo" -e "mojang/craft/block/w0mb4t/ac$m" -e "FullTolerance.jar" -e "WomboClient" -e "io.wenzys" -e "A=CFD]FfGsH" -e "*\[G+FEi" -e ")<*=,T-U/Y0" -e "LSquad.dll" -e "iq!QQ)B!I" -e "W#X*Y0ZT\[|" -e "BITCHESS45" -e "science/roblox/latch/plugin/plugins/combat/Forcefield" -e "fr/reizam/deiramod/mods/Reach.class" -e "(Tutorial)$" -e "AutoClicker.class" -e "TriggerBot.class" -e "ExtendedReach.class" -e "Aimbot.class" -e "KillAura.class" -e "ChestStealer.class" -e "ForceField.class" -e "xray/bypass/XRay$1" -e "7selfDestruct" -e "Self-Destructed" -e "maxcpsEST.MF" -e "mincpsEST.MF" -e "XRay.class" -e "8esghy)" -e "SpidrcraftVcheater" -e "net/minecraft/vapelegit" -e "autoclickerr" -e "217.70.184.38" -e "0X71756747815855352521535263565341" -e "caden/modules/" -e "InjectionDLL.dll" -e "`a]`r" -e "`a\[`f" -e "(Lhi/aJ;)V" -e "fml:Meme" -e "http://vpn.cinque.pw" -e "Xerxes.jar" -e "t/t/d" -e "bG1hb2hheA" -e "aHR0cDovL3N0ZWFtdHJhZGV1cmwubmV0L2NsaWVudFZlcmlmeS92ZXJpZnkucGhw" -e "B7:+" -e "8RPb$3m" -e "hItSpWDa" -e "net.minecraft.world.biome.Render.MadGambleDelay" -e "DJ.HD.Icarus" -e "a.a.a.f.C" -e "net.minecraft.client.i.d.Y" -e "net.minecraft.CnG" -e "hi.a0" -e "com.darkmagician6.eventapi" -e "telltalegames.batmanthetelltaleseries" -e "me.Jailbreak" -e "WhyAreYouLookingHere.i" -e "net.minecraft.client.gui.creative.UI.ExternalGhostlyUI" -e "koupah.Agent5" -e "a/iiIIIIiIii" -e "Dr3am.class" -e "me/azoq/azoq.class" -e "aperture/Aperture$1.class" -e "o/e/e/n/e/x/B.class" -e "p/i/i/G.class" -e "a/xa.class" -e "_/iffinal.class" -e "_/null.class" -e "_/superenum.class" -e "hwidstring" -e "java/net/URLDecoder;" -e "DeathClient" -e "xZGJtaeSlTaN" -e "iReSqtkUVg" -e "KzGiRe" -e "GvbiRe" -e "142.44.246.31" -e "W,XG;0G" -e "GoldenClient" -e "Hekate" -e "WinDefenderScan" -e "lllIlIIIIIIIIII" -e "Vze2aabdiw0=" -e "Decompilar" -e "(\[BI\[B\[BIIZ)\[B" -e "(\[CFFIZI)I" -e "Je\[@Wc\[nLlXy" -e "AwhhShitHeFuckedUp" -e "isANigger" -e "LzCxIe" -e "QbmWxU" -e "Y5GG54FF" -e "Kamikaze-Crew" -e "che4tlogprivcli3nt" -e "suckmynuts.jar" -e "Cry@\p2.g);X" -e "#8(19" -e "tto>" -e "blowsy" -e "lQNDhrM" -e "AntiVelocity" -e "mcherKRL" -e "$rece.bin'" -e "Take(eÁ_Ë‡-)" -e "The(Á‡‡)" -e "L(‡'e‡)" -e "PenisLess" -e "Free_6']" -e "_8=]Version" -e "Ptdrr_2(]" -e "IiIiiiIIiIi" -e "java.net.preferIPv4Stack)" -e "RUNDLL32.EXEd3dx9.dll,EntryPointlaunch" -e "_=:t?,40d" -e "legacy/gui/C$" -e "future/api" -e "bUn7YhdQhl.class" -e "]DJF:\[3nA" -e "A-mkfsAm_=2A" -e "<.;2jDa2A7;" -e "U_1ad2m\[_#E" -e "M5&a_2Ma" -e "M32SemG0+<ALa" -e "/-a@]m>.2Ah" -e "THKUU NO KB" -e "Strafe Multiplier" -e "Sideways Strafe" -e "Better Strafe Mod" -e "(float)tess.h) / 3.0f;" -e "final float u2 = 0.2f;" -e "Not whitelisted !" -e "Obfuscation by Allatori Obfuscator" -e "OpenComputers Shutdown Thread" -e "Starting Rupture-Core" -e "Coding failure in Argo:" -e "http://java.security .SecureClassLoader" -e "e_ Wh" -e "2.4 b2" -e "Triggerbot \[G]" -e "Cracked by 0x22" -e "Cucklord inside!" -e "Melhor q lawlex" -e "ztrc ore_1 kl_" -e "finish is gay" -e "2,99 blocks" "%{FILE}%"
+if %errorlevel% EQU 0 (
+set {title}=          %{red}%Cheats found.%{reset}%        %{inverse}% %{reset}%
+call :{SCAN-GUI}
+timeout /t 9 /nobreak >nul 2>&1 & goto {MAIN-MENU}
+)
+
+
+set {title}=        %{green}%No cheats found.%{reset}%       %{inverse}% %{reset}%
+call :{SCAN-GUI}
+timeout /t 9 /nobreak >nul 2>&1 & goto {MAIN-MENU}
+)
+::////////////////////////////
